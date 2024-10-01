@@ -1,10 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://e1c0n67tot8d"]
+[gd_scene load_steps=18 format=3 uid="uid://e1c0n67tot8d"]
 
 [ext_resource type="Script" path="res://Scripts/parallax_bg.gd" id="1_7q7hw"]
 [ext_resource type="Texture2D" uid="uid://ckffxbicsieq6" path="res://Assets/images/background.png" id="2_m6jys"]
 [ext_resource type="Texture2D" uid="uid://c10emf3422l0v" path="res://Assets/images/water.png" id="3_3r0g7"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="4_e4b11"]
 [ext_resource type="Texture2D" uid="uid://2b6xkye6ukiy" path="res://Assets/images/player_spritesheet.png" id="4_i42rs"]
+[ext_resource type="Texture2D" uid="uid://bqrqi8h08g77t" path="res://Assets/images/floor.png" id="6_vohwp"]
+[ext_resource type="Script" path="res://platform.gd" id="7_6a8uq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nh3kn"]
 atlas = ExtResource("4_i42rs")
@@ -51,10 +53,21 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3yne2"]
 radius = 17.0
-height = 56.0
+height = 64.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kwijg"]
 size = Vector2(304, 36)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_68a23"]
+texture = ExtResource("6_vohwp")
+texture_region_size = Vector2i(40, 40)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
+
+[sub_resource type="TileSet" id="TileSet_xisrv"]
+tile_size = Vector2i(40, 40)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_68a23")
 
 [node name="World" type="Node2D"]
 
@@ -81,7 +94,7 @@ texture = ExtResource("3_3r0g7")
 stretch_mode = 1
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(29, 184)
+position = Vector2(32, 160)
 script = ExtResource("4_e4b11")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
@@ -90,10 +103,17 @@ autoplay = "default"
 frame_progress = 0.847395
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_3yne2")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(152, 242)
+position = Vector2(152, 240)
 shape = SubResource("RectangleShape2D_kwijg")
+
+[node name="Platform" type="TileMapLayer" parent="."]
+position = Vector2(0, 216)
+tile_set = SubResource("TileSet_xisrv")
+rendering_quadrant_size = 40
+script = ExtResource("7_6a8uq")
