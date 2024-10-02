@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo7bddditivgg"]
+
+[ext_resource type="Texture2D" uid="uid://bqrqi8h08g77t" path="res://Assets/images/floor.png" id="1_5uhil"]
+[ext_resource type="Script" path="res://platform.gd" id="2_w625v"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_68a23"]
+texture = ExtResource("1_5uhil")
+texture_region_size = Vector2i(40, 40)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
+
+[sub_resource type="TileSet" id="TileSet_xisrv"]
+tile_size = Vector2i(40, 40)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_68a23")
+
+[node name="Platform" type="TileMapLayer"]
+tile_set = SubResource("TileSet_xisrv")
+rendering_quadrant_size = 40
+script = ExtResource("2_w625v")
