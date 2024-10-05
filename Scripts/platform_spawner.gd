@@ -55,4 +55,4 @@ func add_platform() -> void:
 			
 			platform.global_position.x = spawnPosX
 			platform.set_platform()
-			#platform.add_coins()
+			platform.add_coins()
