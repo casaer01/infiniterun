@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://e1c0n67tot8d"]
+[gd_scene load_steps=18 format=3 uid="uid://e1c0n67tot8d"]
 
 [ext_resource type="Script" path="res://Scripts/parallax_bg.gd" id="1_7q7hw"]
 [ext_resource type="Texture2D" uid="uid://ckffxbicsieq6" path="res://Assets/images/background.png" id="2_m6jys"]
@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://2b6xkye6ukiy" path="res://Assets/images/player_spritesheet.png" id="4_i42rs"]
 [ext_resource type="Script" path="res://Scripts/platform_spawner.gd" id="6_4lcux"]
 [ext_resource type="Script" path="res://Scripts/score.gd" id="7_sidhc"]
+[ext_resource type="Script" path="res://Scripts/game_over_ui.gd" id="8_2lyvx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0f68y"]
+size = Vector2(512, 26)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nh3kn"]
 atlas = ExtResource("4_i42rs")
@@ -75,12 +79,18 @@ texture = ExtResource("2_m6jys")
 motion_scale = Vector2(1.7, 1)
 motion_mirroring = Vector2(512, 0)
 
-[node name="TextureRect" type="TextureRect" parent="ParallaxBG/ParallaxLayer2"]
+[node name="Water" type="TextureRect" parent="ParallaxBG/ParallaxLayer2"]
 offset_top = 227.0
 offset_right = 512.0
 offset_bottom = 257.0
 texture = ExtResource("3_3r0g7")
 stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="ParallaxBG/ParallaxLayer2/Water"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParallaxBG/ParallaxLayer2/Water/Area2D"]
+position = Vector2(256, 16)
+shape = SubResource("RectangleShape2D_0f68y")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(32, 160)
@@ -107,3 +117,39 @@ theme = SubResource("Theme_xxohl")
 text = "Score:"
 horizontal_alignment = 1
 script = ExtResource("7_sidhc")
+
+[node name="GameOverUI" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("8_2lyvx")
+
+[node name="Panel" type="Panel" parent="GameOverUI"]
+offset_right = 512.0
+offset_bottom = 264.0
+
+[node name="Finalscore" type="Label" parent="GameOverUI"]
+offset_top = 40.0
+offset_right = 512.0
+offset_bottom = 93.0
+theme = SubResource("Theme_xxohl")
+text = "Score:"
+horizontal_alignment = 1
+
+[node name="GameOver" type="Label" parent="GameOverUI"]
+offset_top = 88.0
+offset_right = 512.0
+offset_bottom = 141.0
+theme = SubResource("Theme_xxohl")
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="Retry" type="Button" parent="GameOverUI"]
+offset_left = 216.0
+offset_top = 168.0
+offset_right = 296.0
+offset_bottom = 199.0
+text = "Retry?"
+icon_alignment = 1
+
+[connection signal="body_entered" from="ParallaxBG/ParallaxLayer2/Water/Area2D" to="ParallaxBG" method="_on_area_2d_body_entered"]
+[connection signal="pressed" from="GameOverUI/Retry" to="GameOverUI" method="_on_retry_pressed"]

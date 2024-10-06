@@ -18,7 +18,7 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	if get_node("../Player").position.x < -100:
-		get_node("../GameOver").game_over()
+		get_node("../GameOverUI").game_over()
 	for platform in platform_pool:
 		if platform.position.x < -200:
 			reset_platform(platform)
