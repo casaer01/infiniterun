@@ -44,7 +44,7 @@ func add_platform() -> void:
 		if not platform.visible:
 			var pos: int = platform_pool.find(platform)
 			platform.show()
-			platform.platformSize = randi_range(3, 5)
+			platform.platformSize = randi_range(2, 5)
 			platform.position.y = randi_range(80, 200)
 			
 			var spawnPosX: float

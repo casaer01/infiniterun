@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://e1c0n67tot8d"]
+[gd_scene load_steps=16 format=3 uid="uid://e1c0n67tot8d"]
 
 [ext_resource type="Script" path="res://Scripts/parallax_bg.gd" id="1_7q7hw"]
 [ext_resource type="Texture2D" uid="uid://ckffxbicsieq6" path="res://Assets/images/background.png" id="2_m6jys"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/player.gd" id="4_e4b11"]
 [ext_resource type="Texture2D" uid="uid://2b6xkye6ukiy" path="res://Assets/images/player_spritesheet.png" id="4_i42rs"]
 [ext_resource type="Script" path="res://Scripts/platform_spawner.gd" id="6_4lcux"]
+[ext_resource type="Script" path="res://Scripts/score.gd" id="7_sidhc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nh3kn"]
 atlas = ExtResource("4_i42rs")
@@ -54,6 +55,9 @@ animations = [{
 radius = 17.0
 height = 64.0
 
+[sub_resource type="Theme" id="Theme_xxohl"]
+default_font_size = 38
+
 [node name="World" type="Node2D"]
 
 [node name="ParallaxBG" type="ParallaxBackground" parent="."]
@@ -93,3 +97,13 @@ shape = SubResource("CapsuleShape2D_3yne2")
 
 [node name="Platform Spawner" type="Node" parent="."]
 script = ExtResource("6_4lcux")
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="score" type="Label" parent="GUI"]
+offset_right = 512.0
+offset_bottom = 48.0
+theme = SubResource("Theme_xxohl")
+text = "Score:"
+horizontal_alignment = 1
+script = ExtResource("7_sidhc")

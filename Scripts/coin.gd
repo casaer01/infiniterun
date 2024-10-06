@@ -7,4 +7,5 @@ func _on_audio_stream_player_2d_finished() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if "Player" in body.name:
 		get_node("Coin").hide()
+		Game.score += 1
 		get_node("AudioStreamPlayer2D").play()
